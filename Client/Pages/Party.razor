@@ -1,0 +1,60 @@
+﻿@page "/{PartyID}"
+@page "/{PartyID}/{Username}"
+@page "/{PartyID}/{Username}/{SurveyID}"
+
+@if (PartyID.ToLower().Equals("create"))
+{
+    <CreateMenu />
+}
+else
+{
+    @if (String.IsNullOrEmpty(Username))
+    {
+        <h2>Nazwa party: @PartyID</h2>
+        <h3>Podaj login</h3>
+    }
+    else
+    {
+        @if (String.IsNullOrEmpty(SurveyID))
+        {
+            <h2>Nazwa party: @PartyID</h2>
+            <h3>Twój login @Username</h3>
+        }
+        else if (SurveyID.ToLower().Equals("new"))
+        {
+            <h2>Nazwa party: @PartyID</h2>
+            <h3>Twój login @Username</h3>
+            <h3>Robisz nową ankietkę</h3>
+
+        }
+        else if (SurveyID.ToLower().Equals("admin"))
+        {
+            <h2>Nazwa party: @PartyID</h2>
+            <h3>Twój login @Username</h3>
+            <h3>Panel administratora party</h3>
+        }
+        else
+        {
+            <h2>Nazwa party: @PartyID</h2>
+            <h3>Twój login @Username</h3>
+            <h3>Wypełniasz @SurveyID</h3>
+        }
+    }
+
+}
+
+@code {
+    [Parameter]
+    public string PartyID { get; set; }
+    [Parameter]
+    public string Username { get; set; }
+    [Parameter]
+    public string SurveyID { get; set; }
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        PartyID = PartyID ?? "";
+        Username = Username ?? "";
+        SurveyID = SurveyID ?? "";
+    }
+}
